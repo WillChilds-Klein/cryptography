@@ -45,6 +45,10 @@ def load_ed25519_vectors(vector_data):
     return data
 
 
+def test_ed25519_always_supported(backend):
+    assert backend.ed25519_supported()
+
+
 class TestEd25519Signing:
     def test_sign_verify_input(self, backend, subtests):
         vectors = load_vectors_from_file(
