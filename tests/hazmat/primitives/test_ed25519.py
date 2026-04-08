@@ -10,7 +10,7 @@ import textwrap
 
 import pytest
 
-from cryptography.exceptions import InvalidSignature, _Reasons
+from cryptography.exceptions import InvalidSignature
 from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.primitives.asymmetric.ed25519 import (
     Ed25519PrivateKey,
@@ -18,7 +18,7 @@ from cryptography.hazmat.primitives.asymmetric.ed25519 import (
 )
 
 from ...doubles import DummyKeySerializationEncryption
-from ...utils import load_vectors_from_file, raises_unsupported_algorithm
+from ...utils import load_vectors_from_file
 
 
 def load_ed25519_vectors(vector_data):
