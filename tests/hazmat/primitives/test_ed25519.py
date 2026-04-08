@@ -45,31 +45,6 @@ def load_ed25519_vectors(vector_data):
     return data
 
 
-@pytest.mark.supported(
-    only_if=lambda backend: not backend.ed25519_supported(),
-    skip_message="Requires OpenSSL without Ed25519 support",
-)
-def test_ed25519_unsupported(backend):
-    with raises_unsupported_algorithm(
-        _Reasons.UNSUPPORTED_PUBLIC_KEY_ALGORITHM
-    ):
-        Ed25519PublicKey.from_public_bytes(b"0" * 32)
-
-    with raises_unsupported_algorithm(
-        _Reasons.UNSUPPORTED_PUBLIC_KEY_ALGORITHM
-    ):
-        Ed25519PrivateKey.from_private_bytes(b"0" * 32)
-
-    with raises_unsupported_algorithm(
-        _Reasons.UNSUPPORTED_PUBLIC_KEY_ALGORITHM
-    ):
-        Ed25519PrivateKey.generate()
-
-
-@pytest.mark.supported(
-    only_if=lambda backend: backend.ed25519_supported(),
-    skip_message="Requires OpenSSL with Ed25519 support",
-)
 class TestEd25519Signing:
     def test_sign_verify_input(self, backend, subtests):
         vectors = load_vectors_from_file(
@@ -292,10 +267,6 @@ class TestEd25519Signing:
         )
 
 
-@pytest.mark.supported(
-    only_if=lambda backend: backend.ed25519_supported(),
-    skip_message="Requires OpenSSL with Ed25519 support",
-)
 def test_public_key_equality(backend):
     key_bytes = load_vectors_from_file(
         os.path.join("asymmetric", "Ed25519", "ed25519-pkcs8.der"),
@@ -313,10 +284,6 @@ def test_public_key_equality(backend):
         key1 < key2  # type: ignore[operator]
 
 
-@pytest.mark.supported(
-    only_if=lambda backend: backend.ed25519_supported(),
-    skip_message="Requires OpenSSL with Ed25519 support",
-)
 def test_public_key_copy(backend):
     key_bytes = load_vectors_from_file(
         os.path.join("asymmetric", "Ed25519", "ed25519-pkcs8.der"),
@@ -329,10 +296,6 @@ def test_public_key_copy(backend):
     assert key1 == key2
 
 
-@pytest.mark.supported(
-    only_if=lambda backend: backend.ed25519_supported(),
-    skip_message="Requires OpenSSL with Ed25519 support",
-)
 def test_public_key_deepcopy(backend):
     key_bytes = load_vectors_from_file(
         os.path.join("asymmetric", "Ed25519", "ed25519-pkcs8.der"),
@@ -345,10 +308,6 @@ def test_public_key_deepcopy(backend):
     assert key1 == key2
 
 
-@pytest.mark.supported(
-    only_if=lambda backend: backend.ed25519_supported(),
-    skip_message="Requires OpenSSL with Ed25519 support",
-)
 def test_private_key_copy(backend):
     key_bytes = load_vectors_from_file(
         os.path.join("asymmetric", "Ed25519", "ed25519-pkcs8.der"),
@@ -361,10 +320,6 @@ def test_private_key_copy(backend):
     assert key1 == key2
 
 
-@pytest.mark.supported(
-    only_if=lambda backend: backend.ed25519_supported(),
-    skip_message="Requires OpenSSL with Ed25519 support",
-)
 def test_private_key_deepcopy(backend):
     key_bytes = load_vectors_from_file(
         os.path.join("asymmetric", "Ed25519", "ed25519-pkcs8.der"),
