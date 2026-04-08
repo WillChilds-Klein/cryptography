@@ -276,11 +276,11 @@ class Backend:
         return rust_openssl.CRYPTOGRAPHY_IS_AWSLC
 
     def ed25519_supported(self) -> bool:
-        return not self._fips_enabled
+        # Ed25519 is FIPS 186-5 approved (Section 7)
+        return True
 
     def ed448_supported(self) -> bool:
-        if self._fips_enabled:
-            return False
+        # Ed448 is FIPS 186-5 approved (Section 7)
         return (
             not rust_openssl.CRYPTOGRAPHY_IS_LIBRESSL
             and not rust_openssl.CRYPTOGRAPHY_IS_BORINGSSL
