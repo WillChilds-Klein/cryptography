@@ -109,6 +109,10 @@ python-source = "src"
 python-packages = ["cryptography"]
 manifest-path = "src/rust/Cargo.toml"
 module-name = "cryptography.hazmat.bindings._rust"
+# Builds the wheel with pyo3's extension-module feature so the extension does
+# not link libpython. Kept off the crate's default features so `cargo test`
+# can still link the standalone test binaries.
+features = ["cryptography-rust/extension-module"]
 locked = true
 sdist-generator = "git"
 include = [

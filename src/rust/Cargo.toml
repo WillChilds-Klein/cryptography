@@ -28,6 +28,17 @@ self_cell.workspace = true
 [build-dependencies]
 pyo3-build-config.workspace = true
 
+[features]
+# Enabled by maturin when building the wheel (see tool.maturin.features in
+# pyproject.toml). Activates pyo3's extension-module feature, which stops the
+# extension from linking libpython. That link is unnecessary -- the symbols
+# are provided by the interpreter that dlopens the module -- and is actively
+# harmful against a shared libpython: the resulting NEEDED entry makes the
+# module unloadable where Python is embedded without a shared libpython (e.g.
+# AWS Lambda). It is left off by default so `cargo test` can still link the
+# standalone test binaries against libpython.
+extension-module = ["pyo3/extension-module"]
+
 [lib]
 name = "cryptography_rust"
 crate-type = ["cdylib"]
